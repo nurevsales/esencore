@@ -364,6 +364,68 @@ body.locked{ overflow:hidden; }
 .scene .note b{ color:var(--dim); font-weight:400; }
 
 /* =================================================================
+   SCENE — FULL BLEED
+   One photograph carries the whole section and the copy sits over its
+   dark side. Mobile keeps photo-then-text: this much copy will not stay
+   readable across a phone-width image.
+   ================================================================= */
+.scene-full{ display:block; padding-block:0 var(--pad); }
+.scene-full > .frame{ position:relative; aspect-ratio:4/3; }
+/* this plate is already graded dark — it does not want the stock treatment */
+.scene-full > .frame img{ filter:brightness(.90) contrast(1.06) saturate(.90); transform:translate3d(0,0,0) scale(1.06); }
+.sf-inner{ padding-top:clamp(2.5rem,7vw,3.5rem); }
+.sf-grid{ padding-inline:var(--gutter); }
+.sf-main{ max-width:52ch; }
+.scene-full h2{ font-size:var(--fs-h3); line-height:.96; letter-spacing:-.03em;
+  text-transform:uppercase; font-weight:500; margin-top:1.75rem; }
+.scene-full h2 span{ display:block; }
+.scene-full h2 .mute{ color:#9CACB6; }
+.sf-copy{ margin-top:1.6rem; max-width:44ch; color:#A8B3BA; line-height:1.75; }
+
+.sf-feats{ display:grid; grid-template-columns:minmax(0,1fr);
+  gap:1.6rem; margin-top:clamp(2.25rem,4vw,3rem); }
+.sf-feats li{ color:#C6D1D8; }
+.sf-feats svg{ width:26px; height:26px; display:block; stroke:currentColor; }
+.sf-feats b{ display:block; margin-top:1.1rem; font-family:var(--mono); font-weight:400;
+  font-size:var(--fs-micro); letter-spacing:.16em; text-transform:uppercase;
+  color:#B0BBC2; line-height:2; }
+@media (min-width:560px){
+  .sf-feats{ grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; }
+  .sf-feats li{ border-left:1px solid rgba(233,239,242,.15);
+    padding-inline:clamp(.85rem,1.5vw,1.4rem); }
+  .sf-feats li:first-child{ border-left:0; padding-left:0; }
+  .sf-feats li:last-child{ padding-right:0; }
+}
+.sf-foot{ display:flex; flex-direction:column; gap:1.8rem;
+  margin-top:clamp(2.75rem,5vw,4.5rem); }
+.sf-tag,.sf-note{ font-family:var(--mono); font-size:var(--fs-micro);
+  letter-spacing:.2em; text-transform:uppercase; line-height:1.95; }
+.sf-tag{ color:#7C868D; padding-top:1.15rem;
+  border-top:1px solid rgba(233,239,242,.12); width:min(380px,100%); }
+.sf-note{ color:#B3BEC5; display:flex; align-items:flex-end; gap:1.15rem; }
+.sf-note i{ display:block; width:56px; height:1px; background:var(--accent);
+  margin-bottom:.62rem; flex:none; }
+
+@media (min-width:1000px){
+  .scene-full{ position:relative; padding:0; }
+  .scene-full > .frame{ position:absolute; inset:0; aspect-ratio:auto; }
+  .scene-full .vig{
+    background:
+      linear-gradient(90deg, rgba(6,8,10,.93) 0%, rgba(6,8,10,.76) 24%, rgba(6,8,10,.24) 50%, rgba(6,8,10,0) 70%),
+      linear-gradient(180deg, rgba(6,8,10,.55) 0%, rgba(6,8,10,0) 24%, rgba(6,8,10,0) 66%, rgba(6,8,10,.70) 100%),
+      linear-gradient(0deg, rgba(17,48,60,.12), rgba(17,48,60,.12));
+  }
+  .sf-inner{ position:relative; z-index:5; padding-top:0; }
+  .sf-grid{ display:flex; flex-direction:column; justify-content:space-between;
+    min-height:min(60vw,920px); padding-block:clamp(4rem,6.5vw,6rem);
+    padding-inline:max(var(--gutter), calc((100% - var(--maxw)) / 2)); }
+  .sf-main{ max-width:min(44%,480px); }
+  .sf-copy{ max-width:40ch; }
+  .sf-foot{ flex-direction:row; align-items:flex-end; justify-content:space-between; gap:2.5rem; }
+  .sf-note{ text-align:right; }
+}
+
+/* =================================================================
    STATEMENT SECTIONS (no photograph)
    ================================================================= */
 .stmt{ padding-block:var(--pad); }
@@ -702,22 +764,32 @@ html:not(.js) .tl-hint{ display:none; }
 
 <div id="technology">
 
-<!-- ================================================================ SCENE — FORMULATION (image right)
-     PHOTOGRAPH 02 — macro formulation. 5:4 desktop / 4:3 mobile.
+<!-- ================================================================ SCENE — FORMULATION (full bleed)
+     PHOTOGRAPH 02 — one image carries the section; all text is live HTML over it.
+     Replace the <img> with the full-resolution original when you have it.
      ================================================================================== -->
-<section class="scene" id="formulation">
-  <div class="scene-text" data-in>
-    <p class="eyebrow">Formulation</p>
-    <h2><span>Controlled</span><span class="mute">Preparation.</span></h2>
-    <p class="copy">Formulation begins once incoming material has been identified and qualified. Preparation is carried out to defined specifications and recorded as performed, so the conditions behind a batch stay readable long after it leaves the floor.</p>
-    <p class="note"><b>Documented batch processing</b><br>Defined specifications and concentrations<br>Precision vial filling and stoppering</p>
-  </div>
-  <div class="scene-media" data-in style="--d:140ms">
-    <figure class="frame" style="--kx:26%;--ky:30%;--k1:rgba(168,192,204,.50);--bx:84%;--by:86%;--k2:rgba(52,92,110,.44);--ang:158deg">
-      <img data-fb="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" data-fb-srcset="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900 900w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400 1400w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2000 2000w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2600 2600w" src="img/formulation-1400.jpg" srcset="img/formulation-900.jpg 900w, img/formulation-1400.jpg 1400w, img/formulation-2000.jpg 2000w, img/formulation-2600.jpg 2600w" sizes="(max-width: 999px) 100vw, 58vw"
-             alt="Macro view of glass ampoules and a sealed syringe on a dark stainless surface." width="1600" height="1067" decoding="async" loading="lazy">
-      <span class="vig"></span>
-    </figure>
+<section class="scene-full" id="formulation">
+  <figure class="frame" data-scale="1.06" style="--kx:22%;--ky:34%;--k1:rgba(168,192,204,.42);--bx:78%;--by:82%;--k2:rgba(60,104,124,.38);--ang:158deg">
+    <img src="img/formulation-1400.jpg" srcset="img/formulation-900.jpg 900w, img/formulation-1400.jpg 1400w, img/formulation-2000.jpg 2000w" sizes="100vw" alt="Labelled sample bottles, cryovials and foil pouches arranged on a stainless work surface." width="1400" height="840" decoding="async" loading="lazy">
+    <span class="vig"></span>
+  </figure>
+  <div class="sf-inner">
+    <div class="sf-grid">
+      <div class="sf-main" data-in>
+        <p class="eyebrow">Formulation</p>
+        <h2><span>Controlled</span><span class="mute">Preparation.</span></h2>
+        <p class="sf-copy">Formulation begins once incoming material has been identified and qualified. Preparation is carried out to defined specifications and recorded as performed, so the conditions behind a batch stay readable long after it leaves the floor.</p>
+        <ul class="sf-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.6 4.5 5.5v6.1c0 4.4 3 8.1 7.5 9.8 4.5-1.7 7.5-5.4 7.5-9.8V5.5z"/><path d="m8.7 11.9 2.4 2.5 4.3-4.7"/></svg><b>Documented<br>Batch Processing</b></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.9" width="14" height="18.2" rx="1.7"/><path d="M8.5 8.2h7M8.5 12h7M8.5 15.8h4.3"/></svg><b>Defined<br>Specifications</b></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.2 20.4h15.6" stroke-width="1.3"/><path d="M7.7 20.4v-5.2M12 20.4V9.6M16.3 20.4V4.9" stroke-width="2.1"/></svg><b>Precision Filling<br>And Stoppering</b></li>
+        </ul>
+      </div>
+      <div class="sf-foot" data-in style="--d:140ms">
+        <p class="sf-tag">Quality today. Confidence tomorrow.</p>
+        <p class="sf-note"><span>From material<br>to meaningful results</span><i aria-hidden="true"></i></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -825,7 +897,7 @@ html:not(.js) .tl-hint{ display:none; }
 <!-- ================================================================ FINAL CTA ================================================================ -->
 <section class="final" id="final">
   <div class="frame" aria-hidden="true" style="--kx:30%;--ky:28%;--k1:rgba(140,168,182,.42);--bx:78%;--by:84%;--k2:rgba(40,74,90,.40);--ang:160deg">
-    <img data-fb="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" data-fb-srcset="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900 900w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400 1400w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2000 2000w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2600 2600w" src="img/formulation-1400.jpg" srcset="img/formulation-900.jpg 900w, img/formulation-1400.jpg 1400w, img/formulation-2000.jpg 2000w, img/formulation-2600.jpg 2600w" sizes="100vw"
+    <img data-fb="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400" data-fb-srcset="https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=900 900w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1400 1400w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2000 2000w, https://images.pexels.com/photos/7470819/pexels-photo-7470819.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=2600 2600w" src="img/lyophilization-1400.jpg" srcset="img/lyophilization-900.jpg 900w, img/lyophilization-1400.jpg 1400w, img/lyophilization-2000.jpg 2000w, img/lyophilization-2600.jpg 2600w" sizes="100vw"
              alt="" width="1600" height="1067" decoding="async" loading="lazy">
     <span class="vig"></span>
   </div>
@@ -990,7 +1062,7 @@ const CONFIG = {
            endpoint: 'https://formspree.io/f/xxxxxxxx',
        Any endpoint accepting a JSON POST works equally well.
        =================================================================== */
-    endpoint: null,
+    endpoint: 'https://formspree.io/f/xxxxxxxx',
     facts: [
       { k:'Location', v:'Simi Valley, California' },
       { k:'Programs', v:'Private label &middot; Custom &middot; Recurring' },
@@ -1190,7 +1262,8 @@ const CONFIG = {
       img.addEventListener('error', fail);
       if (img.complete && img.naturalWidth === 0) fail();
     }
-    return { el:f, img:img, hero: f.closest('.hero') !== null };
+    return { el:f, img:img, hero: f.closest('.hero') !== null,
+             scale: parseFloat(f.dataset.scale || '1.12') };
   });
 
   /* --- scroll-driven state --- */
@@ -1230,8 +1303,12 @@ const CONFIG = {
             'translate3d(0,' + (p * (mob ? 42 : 88)).toFixed(2) + 'px,0) scale(' + (1.12 + p * 0.10).toFixed(4) + ')';
         } else {
           const p = (vh - r.top) / (vh + r.height);
+          /* never travel further than the overscale actually hides, or the
+             plate's own edge slides into frame */
+          const headroom = r.height * (f.scale - 1) * 0.9;
+          const travel = Math.min(range, headroom);
           f.img.style.transform =
-            'translate3d(0,' + (p * range - range / 2).toFixed(2) + 'px,0) scale(1.12)';
+            'translate3d(0,' + (p * travel - travel / 2).toFixed(2) + 'px,0) scale(' + f.scale + ')';
         }
       }
     }
