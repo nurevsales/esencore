@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Esencore">
+  <rect width="64" height="64" rx="9" fill="#0A0D0F"/>
+  <rect x="17" y="16" width="30" height="5.5" rx="1.2" fill="#E9EFF2"/>
+  <rect x="17" y="29.25" width="21" height="5.5" rx="1.2" fill="#E9EFF2"/>
+  <rect x="17" y="42.5" width="30" height="5.5" rx="1.2" fill="#63C6D8"/>
+</svg>
