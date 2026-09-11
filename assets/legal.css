@@ -1,10 +1,10 @@
 /* Esencore — shared chrome for policy pages. Tokens mirror index.html. */
 :root{
-  color-scheme: dark;
-  --void:#06080A; --ink:#0A0D0F; --ink-2:#0D1114;
-  --chrome:#E9EFF2; --dim:#939DA4; --faint:#737D84;
-  --line:rgba(233,239,242,.10); --line-2:rgba(233,239,242,.20);
-  --accent:#63C6D8; --accent-dim:#2C7E8E;
+  color-scheme: light;
+  --void:#0A2638; --ink:#F6F9FB; --ink-2:#EDF3F7;
+  --chrome:#101820; --dim:#566570; --faint:#64717C;
+  --line:rgba(16,24,32,.11); --line-2:rgba(16,24,32,.22);
+  --accent:#1677A8; --accent-2:#32B7D5; --accent-dim:#9CC2D6;
   --display:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
   --body:'Manrope','Helvetica Neue',Helvetica,Arial,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
@@ -22,7 +22,7 @@ a:hover{ border-bottom-color:var(--chrome); }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
 .wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); }
 
-.top{ border-bottom:1px solid var(--line); padding-block:1.5rem; }
+.top{ border-bottom:1px solid var(--line); padding-block:1.5rem; background:var(--white,#FFFFFF); }
 .top .wrap{ max-width:1320px; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; }
 .brand{ display:flex; flex-direction:column; gap:.34rem; border:0; }
 .brand b{ font-family:var(--display); font-weight:500; font-size:1.0625rem;
@@ -51,7 +51,7 @@ ul{ margin:0 0 1.15rem; padding-left:1.15rem; color:var(--dim); }
 li{ margin-bottom:.5rem; }
 strong{ color:var(--chrome); font-weight:600; }
 .fill{ color:var(--accent); font-family:var(--mono); font-size:.9em;
-  background:rgba(99,198,216,.08); padding:.1em .4em; border-radius:2px; }
+  background:rgba(22,119,168,.08); padding:.1em .4em; border-radius:2px; }
 .foot{ border-top:1px solid var(--line); padding-block:2.25rem; }
 .foot .wrap{ max-width:1320px; display:flex; flex-wrap:wrap; gap:1rem 2rem; justify-content:space-between;
   font-family:var(--mono); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }

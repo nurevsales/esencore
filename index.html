@@ -44,26 +44,33 @@
    One committed dark world. Every colour painted explicitly.
    ================================================================= */
 :root{
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Grounds — four steps of charcoal, used to separate scenes */
-  --void:   #06080A;
-  --ink:    #0A0D0F;
-  --ink-2:  #0D1114;
-  --ink-3:  #12171A;
+  /* ---------------------------------------------------------------
+     GROUNDS — daylight laboratory. The names stay semantic so every
+     component follows the palette rather than naming colours itself.
+     --------------------------------------------------------------- */
+  --white:  #FFFFFF;
+  --ink:    #F6F9FB;   /* page ground        */
+  --ink-2:  #EDF3F7;   /* cool surface       */
+  --ink-3:  #E3EBF1;   /* blue-gray surface  */
+  --void:   #0A2638;   /* deep scientific navy — the dark moments */
+  --steel:  #AEBBC4;
 
-  /* Light */
-  --chrome: #E9EFF2;
-  --dim:    #939DA4;
-  --faint:  #737D84;
+  /* Text */
+  --chrome: #101820;
+  --dim:    #566570;
+  --faint:  #64717C;   /* spec #7C8A94 measured 3.2:1 at 10px; nearest passing tone */
 
-  /* Lines */
-  --line:   rgba(233,239,242,.10);
-  --line-2: rgba(233,239,242,.20);
+  /* Lines — dark hairlines on light ground */
+  --line:   rgba(16,24,32,.11);
+  --line-2: rgba(16,24,32,.22);
 
-  /* Restrained cyan. State, rails, focus. Nothing decorative. */
-  --accent:     #63C6D8;
-  --accent-dim: #2C7E8E;
+  /* Scientific blue carries state; cyan is the highlight, used sparingly. */
+  --accent:     #1677A8;
+  --accent-2:   #32B7D5;
+  --accent-dim: #9CC2D6;
+  --mute-head:  #6C8299;   /* the softened second line of a headline */
 
   --display:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
   --body:'Manrope','Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -120,6 +127,36 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 }
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
 
+/* =================================================================
+   DARK SCOPE
+   A section marked .on-dark redeclares the same tokens in navy, so
+   every component inside inherits the darker lighting without a
+   single component rule being rewritten. This is how the page moves
+   between daylight and the cinematic equipment moments.
+   ================================================================= */
+.on-dark{
+  --white:  #0E2C40;
+  --ink:    #0A2638;
+  --ink-2:  #0D2C40;
+  --ink-3:  #123448;
+  --chrome: #EAF2F7;
+  --dim:    #A3B7C4;
+  --faint:  #7E94A4;
+  --line:   rgba(234,242,247,.13);
+  --line-2: rgba(234,242,247,.24);
+  --accent:     #32B7D5;
+  --accent-2:   #6FD6EC;
+  --accent-dim: #3F7E9C;
+  --mute-head:  #7FA2BA;
+  background: var(--ink);
+  color: var(--chrome);
+}
+
+/* Section grounds for the scroll progression */
+.bg-white{ background:var(--white); }
+.bg-ice{   background:var(--ink-2); }
+.bg-gray{  background:var(--ink-3); }
+
 /* ---------- Type components ---------- */
 .eyebrow{
   font-family:var(--mono); font-size:var(--fs-label); font-weight:500;
@@ -134,7 +171,7 @@ ul,ol{ margin:0; padding:0; list-style:none; }
   text-transform:uppercase; font-weight:500;
 }
 .title span{ display:block; }
-.title .mute{ color:#8B959C; }
+.title .mute{ color:var(--mute-head); }
 
 .copy{
   color:var(--dim); line-height:1.75; max-width:58ch;
@@ -152,10 +189,15 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 }
 .btn .arw{ transition:transform .4s var(--ease); }
 .btn:hover .arw{ transform:translateX(5px); }
-.btn-fill{ background:var(--chrome); color:var(--void); }
-.btn-fill:hover{ background:#fff; transform:translateY(-1px); }
+/* Dark navy on light ground — not a generic bright-blue medical button. */
+.btn-fill{ background:#0F2534; color:#FFFFFF; }
+.btn-fill:hover{ background:#15384E; transform:translateY(-1px); }
+.btn-fill:hover .arw{ color:var(--accent-2); }
 .btn-line{ background:transparent; color:var(--chrome); border-color:var(--line-2); }
-.btn-line:hover{ border-color:var(--chrome); background:rgba(233,239,242,.05); transform:translateY(-1px); }
+.btn-line:hover{ border-color:var(--accent); color:var(--accent); background:rgba(22,119,168,.05); transform:translateY(-1px); }
+.on-dark .btn-fill{ background:#FFFFFF; color:#0A2638; }
+.on-dark .btn-fill:hover{ background:#DCEAF2; }
+.on-dark .btn-line:hover{ border-color:var(--accent-2); color:var(--accent-2); background:rgba(50,183,213,.08); }
 
 /* =================================================================
    PHOTOGRAPHIC GRADE
@@ -164,7 +206,7 @@ ul,ol{ margin:0; padding:0; list-style:none; }
    ================================================================= */
 .frame{
   position:relative; overflow:hidden;
-  background:var(--void);
+  background:var(--ink-3);
   isolation:isolate;
 }
 /* Fallback field — a lit tonal ground, visible before/if the photo is absent */
@@ -177,31 +219,45 @@ ul,ol{ margin:0; padding:0; list-style:none; }
     linear-gradient(93deg, transparent 0%, rgba(196,218,228,.075) 13%, transparent 27%,
       transparent 43%, rgba(196,218,228,.05) 55%, transparent 69%,
       rgba(196,218,228,.065) 83%, transparent 97%),
-    linear-gradient(var(--ang,164deg), #2C383F 0%, #1A242A 34%, #0E1518 70%, #070A0C 100%);
+    linear-gradient(var(--ang,164deg), #FFFFFF 0%, #EDF3F7 34%, #D8E3EB 70%, #C2D1DC 100%);
+}
+.on-dark .frame::before{
+  background:
+    radial-gradient(64% 48% at var(--kx,32%) var(--ky,26%), var(--k1,rgba(120,170,196,.42)) 0%, transparent 70%),
+    radial-gradient(52% 42% at var(--bx,82%) var(--by,84%), var(--k2,rgba(48,102,132,.44)) 0%, transparent 66%),
+    linear-gradient(var(--ang,164deg), #1B4560 0%, #123246 38%, #0C2638 70%, #081E2C 100%);
 }
 .frame img{
   position:absolute; inset:0; z-index:1;
   width:100%; height:100%; object-fit:cover;
-  filter: brightness(.72) contrast(1.12) saturate(.62);
+  filter: brightness(1.04) contrast(1.03) saturate(.88);
   transform: translate3d(0,0,0) scale(1.12);
   will-change: transform;
 }
+.on-dark .frame img{ filter: brightness(.74) contrast(1.10) saturate(.70); }
 .frame.noimg img{ display:none; }
 .frame.noimg .vig{ opacity:.55; }
 /* Vignette, cool wash, top/bottom falloff */
 .frame .vig{
   position:absolute; inset:0; z-index:2; pointer-events:none;
   background:
-    radial-gradient(122% 92% at 50% 44%, rgba(6,8,10,0) 32%, rgba(6,8,10,.52) 100%),
-    linear-gradient(180deg, rgba(6,8,10,.26) 0%, rgba(6,8,10,0) 30%, rgba(6,8,10,0) 66%, rgba(6,8,10,.40) 100%),
-    linear-gradient(0deg, rgba(17,48,60,.18), rgba(17,48,60,.18));
+    radial-gradient(126% 96% at 50% 42%, rgba(246,249,251,0) 40%, rgba(214,227,236,.42) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 68%, rgba(227,235,241,.46) 100%),
+    linear-gradient(0deg, rgba(22,119,168,.05), rgba(22,119,168,.05));
+}
+.on-dark .frame .vig{
+  background:
+    radial-gradient(122% 92% at 50% 44%, rgba(10,38,56,0) 32%, rgba(6,24,36,.56) 100%),
+    linear-gradient(180deg, rgba(6,24,36,.28) 0%, rgba(6,24,36,0) 30%, rgba(6,24,36,0) 64%, rgba(6,24,36,.46) 100%),
+    linear-gradient(0deg, rgba(22,86,120,.20), rgba(22,86,120,.20));
 }
 /* Film grain — one tiled raster, reused everywhere */
 .frame::after{
   content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode:overlay; opacity:.19;
+  mix-blend-mode:overlay; opacity:.10;
 }
+.on-dark .frame::after{ opacity:.18; }
 
 /* =================================================================
    NAVIGATION
@@ -210,10 +266,11 @@ ul,ol{ margin:0; padding:0; list-style:none; }
   position:fixed; inset:0 0 auto 0; z-index:100; height:var(--nav-h);
   display:flex; align-items:center;
   border-bottom:1px solid transparent;
+  color:var(--chrome);
   transition:background .5s var(--ease), border-color .5s var(--ease), backdrop-filter .5s var(--ease);
 }
 .nav.is-scrolled{
-  background:rgba(8,11,13,.84);
+  background:rgba(246,249,251,.84);
   -webkit-backdrop-filter:saturate(160%) blur(18px);
   backdrop-filter:saturate(160%) blur(18px);
   border-bottom-color:var(--line);
@@ -264,7 +321,7 @@ ul,ol{ margin:0; padding:0; list-style:none; }
 
 .menu{
   position:fixed; inset:0; z-index:99;
-  background:rgba(6,8,10,.97);
+  background:rgba(246,249,251,.97);
   -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px);
   padding:calc(var(--nav-h) + 2.5rem) var(--gutter) 2.5rem;
   display:flex; flex-direction:column;
@@ -293,16 +350,18 @@ body.locked{ overflow:hidden; }
   position:relative; min-height:min(100svh, 1000px);
   display:flex; align-items:flex-end;
   padding-block:calc(var(--nav-h) + 5rem) clamp(3.5rem,7vw,6rem);
-  background:var(--void);
+  background:var(--white);
 }
 .hero .frame{ position:absolute; inset:0; }
-.hero .frame img{ filter:brightness(.64) contrast(1.14) saturate(.54); }
+/* Daylight exposure; the scrim lifts the left so dark type reads over it. */
+.hero .frame img{ filter:brightness(1.05) contrast(1.06) saturate(.86); }
 .hero .vig{
   background:
-    radial-gradient(135% 100% at 62% 34%, rgba(6,8,10,0) 18%, rgba(6,8,10,.62) 92%),
-    linear-gradient(180deg, rgba(6,8,10,.72) 0%, rgba(6,8,10,.20) 38%, rgba(6,8,10,.62) 78%, rgba(6,8,10,.94) 100%),
-    linear-gradient(90deg, rgba(6,8,10,.80) 0%, rgba(6,8,10,.28) 52%, rgba(6,8,10,.06) 100%),
-    linear-gradient(0deg, rgba(17,48,60,.20), rgba(17,48,60,.20));
+    linear-gradient(92deg, rgba(250,252,253,.95) 0%, rgba(248,251,252,.86) 30%,
+      rgba(246,249,251,.44) 56%, rgba(246,249,251,.04) 78%),
+    linear-gradient(180deg, rgba(255,255,255,.62) 0%, rgba(255,255,255,0) 26%,
+      rgba(255,255,255,0) 62%, rgba(233,240,245,.72) 100%),
+    linear-gradient(0deg, rgba(22,119,168,.045), rgba(22,119,168,.045));
 }
 .hero-inner{ position:relative; z-index:4; width:100%; }
 .hero h1{
@@ -313,7 +372,7 @@ body.locked{ overflow:hidden; }
 .hero h1 span{ display:block; }
 .hero-sub{
   margin-top:clamp(1.6rem,2.6vw,2.25rem);
-  color:rgba(233,239,242,.70); max-width:42ch; line-height:1.68;
+  color:var(--dim); max-width:42ch; line-height:1.68;
 }
 .hero-act{ display:flex; flex-wrap:wrap; gap:.9rem; margin-top:clamp(2.1rem,3.6vw,3rem); }
 .hero-foot{
@@ -354,7 +413,7 @@ body.locked{ overflow:hidden; }
 .scene h2{ font-size:var(--fs-h3); line-height:.96; letter-spacing:-.03em;
   text-transform:uppercase; font-weight:500; margin-top:1.75rem; }
 .scene h2 span{ display:block; }
-.scene h2 .mute{ color:#8B959C; }
+.scene h2 .mute{ color:var(--mute-head); }
 .scene .copy{ margin-top:1.6rem; max-width:44ch; }
 .scene .note{
   margin-top:2.1rem; padding-top:1.5rem; border-top:1px solid var(--line);
@@ -371,15 +430,11 @@ body.locked{ overflow:hidden; }
    stepping onto the floor rather than as a new page.
    ================================================================= */
 .proof{
-  padding-block: clamp(6rem,12vw,12rem) clamp(10rem,26vw,24rem);
+  padding-block: clamp(5rem,10vw,10rem) clamp(6rem,12vw,12rem);
   background: linear-gradient(180deg,
-    #06080A 0%, #1E262B 7%, #79848C 15%, #CDD5DB 22%, #F4F7F9 28%,
-    #FFFFFF 34%, #FFFFFF 56%,
-    #F0F4F6 62%, #D2DAE0 69%, #A6B0B8 76%, #7A848C 82%,
-    #505A62 88%, #2E373D 93%, #171D21 97%, var(--ink) 100%);
+    #FFFFFF 0%, #FBFDFE 18%, #F6F9FB 40%,
+    #F1F6F9 62%, #EDF3F7 82%, #EDF3F7 100%);
 }
-/* the descent is the breathing room; the next section needn't add its own */
-.proof + .stmt{ padding-top: clamp(1.5rem,3vw,3rem); }
 .proof-grid{ display:grid; gap:clamp(1rem,1.8vw,1.6rem); grid-template-columns:minmax(0,1fr); }
 @media (min-width:900px){ .proof-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
 
@@ -433,7 +488,7 @@ body.locked{ overflow:hidden; }
 .scene-full h2{ font-size:var(--fs-h3); line-height:.96; letter-spacing:-.03em;
   text-transform:uppercase; font-weight:500; margin-top:1.75rem; }
 .scene-full h2 span{ display:block; }
-.scene-full h2 .mute{ color:#9CACB6; }
+.scene-full h2 .mute{ color:var(--mute-head); }
 .sf-copy{ margin-top:1.6rem; max-width:44ch; color:#A8B3BA; line-height:1.75; }
 
 .sf-feats{ display:grid; grid-template-columns:minmax(0,1fr);
@@ -489,10 +544,23 @@ body.locked{ overflow:hidden; }
 }
 .stmt-head .title{ margin-top:1.9rem; }
 
+/* Ice ground that sinks into navy for the equipment sections below. */
+#capabilities{
+  background: linear-gradient(180deg,
+    #EDF3F7 0%, #EDF3F7 54%, #DCE7EE 68%,
+    #A8C0D0 80%, #4E7A96 90%, #14384F 96%, #0A2638 100%);
+}
+/* …and analytical climbs back out into daylight. */
+#analytical{
+  background: linear-gradient(180deg,
+    #0A2638 0%, #14384F 6%, #4E7A96 14%, #A8C0D0 24%,
+    #DCE7EE 34%, #F6F9FB 48%, #FFFFFF 70%, #FFFFFF 100%);
+}
+
 /* Process timeline */
 .tl{ position:relative; margin-top:clamp(4rem,7vw,7rem); }
 .tl-rail{ position:absolute; left:0; right:0; top:5px; height:1px; background:var(--line); }
-.tl-fill{ position:absolute; left:0; right:0; top:5px; height:1px; background:var(--accent-dim);
+.tl-fill{ position:absolute; left:0; right:0; top:5px; height:1px; background:var(--accent);
   transform:scaleX(0); transform-origin:0 50%; transition:transform .4s linear; }
 .tl-steps{ display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); }
 .tl-step{
@@ -508,7 +576,7 @@ body.locked{ overflow:hidden; }
 }
 .tl-step[aria-selected="true"]::before{
   background:var(--accent); border-color:var(--accent);
-  box-shadow:0 0 0 5px rgba(99,198,216,.13);
+  box-shadow:0 0 0 5px rgba(22,119,168,.13);
 }
 .tl-step:hover::before{ border-color:var(--chrome); }
 .tl-step:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
@@ -570,7 +638,7 @@ html:not(.js) .tl-hint{ display:none; }
 /* Quality chain — a thin documented sequence, not cards */
 .chain{ margin-top:2.5rem; position:relative; padding-left:2.5rem; }
 .chain-rail{ position:absolute; left:5px; top:8px; bottom:8px; width:1px; background:var(--line); }
-.chain-fill{ position:absolute; left:5px; top:8px; bottom:8px; width:1px; background:var(--accent-dim);
+.chain-fill{ position:absolute; left:5px; top:8px; bottom:8px; width:1px; background:var(--accent);
   transform:scaleY(0); transform-origin:50% 0; transition:transform .4s linear; }
 .chain li{ position:relative; padding-block:.62rem; display:flex; align-items:baseline; gap:1rem; }
 .chain li::before{
@@ -612,6 +680,9 @@ html:not(.js) .tl-hint{ display:none; }
 .facility-over{
   position:absolute; inset:0; z-index:4; display:flex; align-items:flex-end;
   padding-bottom:clamp(2.25rem,4vw,3.5rem);
+  background:linear-gradient(180deg,
+    rgba(255,255,255,0) 34%, rgba(250,252,253,.62) 62%,
+    rgba(246,249,251,.90) 84%, rgba(240,245,248,.96) 100%);
 }
 .facility-over .title{ font-size:clamp(1.875rem,3.6vw,3.25rem); max-width:20ch; }
 .facility-tail{ padding-block:clamp(2.5rem,5vw,4.5rem) var(--pad); }
@@ -620,13 +691,19 @@ html:not(.js) .tl-hint{ display:none; }
 /* =================================================================
    FINAL CTA
    ================================================================= */
-.final{ position:relative; padding-block:clamp(7rem,14vw,15rem); background:var(--void); overflow:hidden; isolation:isolate; }
+/* The story ends in daylight: the vials sit in soft blue-white illumination
+   with a great deal of air around the closing statement. */
+.final{
+  position:relative; padding-block:clamp(8rem,16vw,17rem);
+  background:linear-gradient(180deg, #FFFFFF 0%, #F8FBFC 30%, #F1F6F9 66%, #EAF1F6 100%);
+  overflow:hidden; isolation:isolate;
+}
 .final .frame{ position:absolute; inset:0; }
-.final .frame img{ filter:brightness(.42) contrast(1.18) saturate(.42); }
+.final .frame img{ filter:brightness(1.24) contrast(.94) saturate(.62); opacity:.30; }
 .final .vig{
   background:
-    radial-gradient(100% 80% at 50% 50%, rgba(6,8,10,.46) 0%, rgba(6,8,10,.93) 68%, #06080A 100%),
-    linear-gradient(0deg, rgba(17,48,60,.18), rgba(17,48,60,.18));
+    radial-gradient(96% 78% at 50% 48%, rgba(255,255,255,.34) 0%, rgba(248,251,252,.86) 58%, rgba(244,248,251,.97) 100%),
+    linear-gradient(0deg, rgba(22,119,168,.05), rgba(22,119,168,.05));
 }
 .final .wrap{ position:relative; z-index:5; text-align:center; }
 .final .title{
@@ -648,7 +725,7 @@ html:not(.js) .tl-hint{ display:none; }
 .contact-aside .row{ display:flex; justify-content:space-between; gap:1.5rem;
   padding-block:1.15rem; border-bottom:1px solid var(--line); }
 .contact-aside dt{ font-family:var(--mono); font-size:var(--fs-micro);
-  letter-spacing:.18em; text-transform:uppercase; color:var(--faint); }
+  letter-spacing:.18em; text-transform:uppercase; color:var(--dim); }
 .contact-aside dd{ margin:0; font-size:.875rem; text-align:right; color:var(--dim); }
 
 .form{ display:grid; grid-template-columns:minmax(0,1fr); gap:2rem; }
@@ -656,11 +733,11 @@ html:not(.js) .tl-hint{ display:none; }
 .field{ display:flex; flex-direction:column; gap:.65rem; min-width:0; }
 .field.full{ grid-column:1/-1; }
 .field label{ font-family:var(--mono); font-size:var(--fs-micro); font-weight:500;
-  letter-spacing:.18em; text-transform:uppercase; color:var(--faint); }
+  letter-spacing:.18em; text-transform:uppercase; color:var(--dim); }
 .field label .rq{ color:var(--accent-dim); }
 .field input,.field select,.field textarea{
   width:100%; background:transparent; color:var(--chrome);
-  border:0; border-bottom:1px solid var(--line); border-radius:0;
+  border:0; border-bottom:1px solid var(--line-2); border-radius:0;
   padding:.75rem 0; font-size:.9375rem;
   transition:border-color .4s var(--ease);
 }
@@ -672,7 +749,7 @@ html:not(.js) .tl-hint{ display:none; }
   background-size:5px 5px,5px 5px; background-repeat:no-repeat;
 }
 .field select option{ background:var(--ink-3); color:var(--chrome); }
-.field input::placeholder,.field textarea::placeholder{ color:rgba(233,239,242,.25); }
+.field input::placeholder,.field textarea::placeholder{ color:var(--faint); opacity:.75; }
 .field input:focus,.field select:focus,.field textarea:focus{ outline:none; border-bottom-color:var(--accent); }
 .field.err input,.field.err select,.field.err textarea{ border-bottom-color:#C97260; }
 .field .msg{ font-size:.75rem; color:#C97260; display:none; }
@@ -681,10 +758,12 @@ html:not(.js) .tl-hint{ display:none; }
 .hp{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
 .form-err{
   grid-column:1/-1; margin-top:.25rem;
-  font-size:.8125rem; line-height:1.6; color:#D89078;
-  border-left:2px solid #C9704F; padding:.7rem 0 .7rem 1.1rem;
+  font-size:.8125rem; line-height:1.6; color:#9C3B1E;
+  border-left:2px solid #C2603C; padding:.7rem 0 .7rem 1.1rem;
 }
-.form-err a{ color:#EBC6B3; border-bottom:1px solid rgba(235,198,179,.45); }
+.form-err a{ color:#7A2E16; border-bottom:1px solid rgba(122,46,22,.45); }
+.on-dark .form-err{ color:#E8A88C; border-left-color:#C2603C; }
+.on-dark .form-err a{ color:#F2C8B4; border-bottom-color:rgba(242,200,180,.45); }
 .form-foot{ grid-column:1/-1; display:flex; flex-direction:column; gap:1.25rem; margin-top:.5rem; }
 @media (min-width:640px){ .form-foot{ flex-direction:row; align-items:center; justify-content:space-between; } }
 .form-note{ font-size:.75rem; color:var(--faint); max-width:42ch; line-height:1.65; }
@@ -701,7 +780,7 @@ html:not(.js) .tl-hint{ display:none; }
 /* =================================================================
    FOOTER
    ================================================================= */
-.footer{ background:var(--void); border-top:1px solid var(--line); padding-block:clamp(3.5rem,6vw,5rem) 2.5rem; }
+.footer{ background:var(--ink); border-top:1px solid var(--line); padding-block:clamp(3.5rem,6vw,5rem) 2.5rem; }
 .footer-top{ display:grid; gap:clamp(2.5rem,4vw,3.5rem); }
 @media (min-width:780px){ .footer-top{ grid-template-columns:minmax(0,1.5fr) repeat(2,minmax(0,1fr)); } }
 .footer address{ font-style:normal; margin-top:1.35rem; color:var(--faint); font-size:.875rem; line-height:1.8; }
@@ -870,7 +949,7 @@ html:not(.js) .tl-hint{ display:none; }
      PHOTOGRAPH 02 — one image carries the section; all text is live HTML over it.
      Replace the <img> with the full-resolution original when you have it.
      ================================================================================== -->
-<section class="scene-full" id="formulation">
+<section class="scene-full on-dark" id="formulation">
   <figure class="frame" data-scale="1.06" style="--kx:22%;--ky:34%;--k1:rgba(168,192,204,.42);--bx:78%;--by:82%;--k2:rgba(60,104,124,.38);--ang:158deg">
     <img src="img/formulation-1400.jpg" srcset="img/formulation-900.jpg 900w, img/formulation-1400.jpg 1400w, img/formulation-2000.jpg 2000w" sizes="100vw" alt="Labelled sample bottles, cryovials and foil pouches arranged on a stainless work surface." width="1400" height="840" decoding="async" loading="lazy">
     <span class="vig"></span>
@@ -899,7 +978,7 @@ html:not(.js) .tl-hint{ display:none; }
      PHOTOGRAPH 03 — freeze-drying. See note in the build handoff: current shot is a
      stand-in showing vials in stainless equipment, not a lyophilizer.
      ================================================================================== -->
-<section class="scene rev" id="lyophilization">
+<section class="scene rev on-dark" id="lyophilization">
   <div class="scene-text" data-in>
     <p class="eyebrow">Lyophilization</p>
     <h2><span>Freeze-Drying,</span><span class="mute">Under Control.</span></h2>
@@ -939,7 +1018,7 @@ html:not(.js) .tl-hint{ display:none; }
 <!-- ================================================================ SCENE — QUALITY (image left)
      PHOTOGRAPH 05 — documentation review.
      ================================================================================== -->
-<section class="scene rev" id="quality">
+<section class="scene rev bg-white" id="quality">
   <div class="scene-text" data-in>
     <p class="eyebrow">Quality &amp; Traceability</p>
     <h2><span>Quality Isn&rsquo;t</span><span class="mute">A Final Step.</span></h2>
@@ -959,7 +1038,7 @@ html:not(.js) .tl-hint{ display:none; }
 </section>
 
 <!-- ================================================================ PRIVATE LABEL (typographic — separates two photographs) ================================================================ -->
-<section class="stmt" id="private-label">
+<section class="stmt bg-gray" id="private-label">
   <div class="wrap">
     <div class="stmt-head" data-in>
       <div>
@@ -975,7 +1054,7 @@ html:not(.js) .tl-hint{ display:none; }
 <!-- ================================================================ FACILITY
      PHOTOGRAPH 06 — one large architectural image. Do not subdivide.
      ================================================================================== -->
-<section class="facility" id="facility">
+<section class="facility bg-white" id="facility">
   <div class="wrap" data-in>
     <p class="eyebrow">Esencore &nbsp;/&nbsp; Simi Valley, California</p>
   </div>
@@ -1012,7 +1091,7 @@ html:not(.js) .tl-hint{ display:none; }
 </section>
 
 <!-- ================================================================ INQUIRY ================================================================ -->
-<section class="contact" id="contact">
+<section class="contact bg-ice" id="contact">
   <div class="wrap">
     <div class="contact-grid">
       <div class="contact-aside" data-in>
@@ -1081,7 +1160,7 @@ html:not(.js) .tl-hint{ display:none; }
 </main>
 
 <!-- ================================================================ FOOTER ================================================================ -->
-<footer class="footer">
+<footer class="footer on-dark">
   <div class="wrap">
     <div class="footer-top">
       <div>
