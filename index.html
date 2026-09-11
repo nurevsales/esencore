@@ -364,6 +364,60 @@ body.locked{ overflow:hidden; }
 .scene .note b{ color:var(--dim); font-weight:400; }
 
 /* =================================================================
+   MANUFACTURING PROOF CARDS
+   The bridge between the brand introduction and the manufacturing
+   story. Bright and architectural at the top; the ground darkens
+   under the visitor as they scroll, so the next section reads as
+   stepping onto the floor rather than as a new page.
+   ================================================================= */
+.proof{
+  padding-block: clamp(6rem,12vw,12rem) clamp(10rem,26vw,24rem);
+  background: linear-gradient(180deg,
+    #06080A 0%, #1E262B 7%, #79848C 15%, #CDD5DB 22%, #F4F7F9 28%,
+    #FFFFFF 34%, #FFFFFF 56%,
+    #F0F4F6 62%, #D2DAE0 69%, #A6B0B8 76%, #7A848C 82%,
+    #505A62 88%, #2E373D 93%, #171D21 97%, var(--ink) 100%);
+}
+/* the descent is the breathing room; the next section needn't add its own */
+.proof + .stmt{ padding-top: clamp(1.5rem,3vw,3rem); }
+.proof-grid{ display:grid; gap:clamp(1rem,1.8vw,1.6rem); grid-template-columns:minmax(0,1fr); }
+@media (min-width:900px){ .proof-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.pcard{
+  position:relative; overflow:hidden; isolation:isolate;
+  border-radius:clamp(18px,1.8vw,26px);
+  background:#EFF3F6;
+  aspect-ratio:4/3;
+  box-shadow:0 1px 2px rgba(16,24,32,.05), 0 20px 44px -24px rgba(16,24,32,.28);
+}
+@media (min-width:900px){ .pcard{ aspect-ratio:7/6; } }
+.pcard img{
+  position:absolute; inset:0; z-index:0;
+  width:100%; height:100%; object-fit:cover; object-position:center;
+}
+.pcard::before{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(102deg,
+    rgba(255,255,255,.95) 0%, rgba(255,255,255,.88) 42%,
+    rgba(255,255,255,.50) 64%, rgba(255,255,255,0) 84%);
+}
+.pc-copy{
+  position:relative; z-index:2;
+  padding:clamp(1.3rem,2vw,1.85rem);
+  max-width:min(70%, 22rem);
+}
+.pcard h3{
+  font-family:var(--body); font-weight:600; text-transform:none;
+  font-size:clamp(1.15rem,1.55vw,1.375rem);
+  line-height:1.18; letter-spacing:-.024em; color:#11171B;
+}
+.pcard h3 .mute{ display:block; color:#6C8299; }
+.pcard p{
+  margin-top:.85rem; color:#5C666E;
+  font-size:clamp(.875rem,1.02vw,1rem); line-height:1.5;
+}
+
+/* =================================================================
    SCENE — FULL BLEED
    One photograph carries the whole section and the copy sits over its
    dark side. Mobile keeps photo-then-text: this much copy will not stay
@@ -738,6 +792,40 @@ html:not(.js) .tl-hint{ display:none; }
       <span>Manufacturing &middot; Analytical &middot; Quality</span>
       <span>Research Use Only</span>
     </div>
+  </div>
+</section>
+
+<!-- ================================================================ MANUFACTURING PROOF CARDS
+     Bridges the hero into the manufacturing story. Three plates; no CTAs.
+     The section's own gradient carries the page from white down into the
+     dark ground the next section sits on.
+     ================================================================================== -->
+<section class="proof" id="proof" aria-labelledby="proof-h">
+  <div class="wrap">
+    <h2 class="sr-only" id="proof-h">Manufacturing proof</h2>
+    <ul class="proof-grid">
+      <li class="pcard" data-in>
+        <img src="img/proof-lyophilized-900.jpg" srcset="img/proof-lyophilized-600.jpg 600w, img/proof-lyophilized-900.jpg 900w, img/proof-lyophilized-1200.jpg 1200w" sizes="(max-width: 899px) 92vw, 31vw" alt="An Esencore-labelled lyophilized vial on a light surface, with further vials behind it." width="679" height="548" loading="lazy" decoding="async">
+        <div class="pc-copy">
+          <h3>Lyophilized<span class="mute">in the USA.</span></h3>
+          <p>Precision formulation.<br>Made in-house.</p>
+        </div>
+      </li>
+      <li class="pcard" data-in style="--d:110ms">
+        <img src="img/proof-tested-900.jpg" srcset="img/proof-tested-600.jpg 600w, img/proof-tested-900.jpg 900w, img/proof-tested-1200.jpg 1200w" sizes="(max-width: 899px) 92vw, 31vw" alt="A rendered molecular model in cool blues against a pale background." width="655" height="548" loading="lazy" decoding="async">
+        <div class="pc-copy">
+          <h3>No more<span class="mute">guessing games.</span></h3>
+          <p>US-made, third-party<br>batch tested.</p>
+        </div>
+      </li>
+      <li class="pcard" data-in style="--d:220ms">
+        <img src="img/proof-coa-900.jpg" srcset="img/proof-coa-600.jpg 600w, img/proof-coa-900.jpg 900w, img/proof-coa-1200.jpg 1200w" sizes="(max-width: 899px) 92vw, 31vw" alt="A phone displaying an Esencore certificate of analysis; the result values are out of focus." width="710" height="548" loading="lazy" decoding="async">
+        <div class="pc-copy">
+          <h3>Batch Produced,<span class="mute">Batch Tested.</span></h3>
+          <p>COAs available for each batch.</p>
+        </div>
+      </li>
+    </ul>
   </div>
 </section>
 
