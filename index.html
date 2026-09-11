@@ -677,6 +677,14 @@ html:not(.js) .tl-hint{ display:none; }
 .field.err input,.field.err select,.field.err textarea{ border-bottom-color:#C97260; }
 .field .msg{ font-size:.75rem; color:#C97260; display:none; }
 .field.err .msg{ display:block; }
+/* honeypot — off-screen, never focusable, bots fill it and people don't */
+.hp{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.form-err{
+  grid-column:1/-1; margin-top:.25rem;
+  font-size:.8125rem; line-height:1.6; color:#D89078;
+  border-left:2px solid #C9704F; padding:.7rem 0 .7rem 1.1rem;
+}
+.form-err a{ color:#EBC6B3; border-bottom:1px solid rgba(235,198,179,.45); }
 .form-foot{ grid-column:1/-1; display:flex; flex-direction:column; gap:1.25rem; margin-top:.5rem; }
 @media (min-width:640px){ .form-foot{ flex-direction:row; align-items:center; justify-content:space-between; } }
 .form-note{ font-size:.75rem; color:var(--faint); max-width:42ch; line-height:1.65; }
@@ -1050,6 +1058,11 @@ html:not(.js) .tl-hint{ display:none; }
             <textarea id="f-details" name="details" rows="4" placeholder="Specifications, concentrations, batch sizes, packaging configurations, documentation requirements."></textarea>
             <span class="msg"></span>
           </div>
+          <div class="hp" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <p class="form-err" id="formErr" hidden tabindex="-1">We couldn&rsquo;t send that just now. Please email <a href="mailto:support@esencore.io">support@esencore.io</a> directly, and we&rsquo;ll pick it up from there.</p>
           <div class="form-foot">
             <p class="form-note">Research use only. Please do not include medical, patient or personal health information in this form.</p>
             <button class="btn btn-fill" type="submit" id="submitBtn">Start The Conversation <span class="arw">&#8594;</span></button>
@@ -1147,19 +1160,12 @@ const CONFIG = {
   ],
 
   contact: {
-    /* ===================================================================
-       REQUIRED BEFORE LAUNCH — while this is null the form shows its
-       confirmation state but sends nothing, so inquiries are lost.
-
-       Easiest: create a free form at https://formspree.io, then paste
-       its endpoint here, e.g.
-           endpoint: 'https://formspree.io/f/xxxxxxxx',
-       Any endpoint accepting a JSON POST works equally well.
-       =================================================================== */
-    endpoint: 'https://formspree.io/f/xxxxxxxx',
+    /* Posts to our own serverless function (api/contact.js), which sends
+       the inquiry on to support@esencore.io. That function needs one env
+       var set in Vercel — see the note at the top of api/contact.js. */
+    endpoint: '/api/contact',
     facts: [
       { k:'Location', v:'Simi Valley, California' },
-      { k:'Email',    v:'<a href="mailto:support@esencore.io">support@esencore.io</a>' },
       { k:'Email',    v:'<a href="mailto:support@esencore.io">support@esencore.io</a>' },
       { k:'Programs', v:'Private label &middot; Custom &middot; Recurring' },
       { k:'Serving',  v:'Research-focused organizations' }
@@ -1472,17 +1478,28 @@ const CONFIG = {
 
       const data = {};
       new FormData(form).forEach((v, k) => { data[k] = v; });
-      const finish = () => { form.hidden = true; if (done) { done.hidden = false; done.focus(); } };
+      const btn = document.getElementById('submitBtn');
+      const errBox = document.getElementById('formErr');
+      const label = btn ? btn.innerHTML : '';
 
-      if (CONFIG.contact.endpoint) {
-        const btn = document.getElementById('submitBtn');
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-        fetch(CONFIG.contact.endpoint, {
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)
-        }).then(finish).catch(finish);
-      } else {
-        finish();
-      }
+      const finish = () => { form.hidden = true; if (done) { done.hidden = false; done.focus(); } };
+      /* Never thank someone for a message that did not send. */
+      const fail = () => {
+        if (btn) { btn.disabled = false; btn.innerHTML = label; }
+        if (errBox) { errBox.hidden = false; errBox.focus(); }
+      };
+
+      if (!CONFIG.contact.endpoint) { fail(); return; }
+      if (errBox) errBox.hidden = true;
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      fetch(CONFIG.contact.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); finish(); })
+        .catch(fail);
     });
     form.addEventListener('input', e => {
       const f = e.target.closest('.field');
