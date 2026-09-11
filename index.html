@@ -684,6 +684,12 @@ html:not(.js) .tl-hint{ display:none; }
 .done h3{ font-size:1.5rem; text-transform:uppercase; letter-spacing:-.01em; margin-top:1.25rem; }
 .done p{ color:var(--dim); margin-top:1rem; font-size:.9375rem; }
 
+.footer address a, .contact-aside dd a{
+  color:var(--dim); border-bottom:1px solid var(--line);
+  transition:color .3s var(--ease), border-color .3s var(--ease);
+}
+.footer address a:hover, .contact-aside dd a:hover{ color:var(--chrome); border-bottom-color:var(--line-2); }
+
 /* =================================================================
    FOOTER
    ================================================================= */
@@ -737,7 +743,7 @@ html:not(.js) .tl-hint{ display:none; }
   "name":"Esencore",
   "alternateName":"Esencore Peptide Manufacturing",
   "description":"U.S.-based peptide manufacturing and analytical operation providing lyophilization, analytical workflows, private-label production and documented batch traceability.",
-  "address":{"@type":"PostalAddress","addressLocality":"Simi Valley","addressRegion":"CA","addressCountry":"US"},
+  "address":{"@type":"PostalAddress","streetAddress":"2796 Sycamore Drive, Suite 204","addressLocality":"Simi Valley","addressRegion":"CA","postalCode":"93065","addressCountry":"US"},"email":"support@esencore.io",
   "areaServed":"US"
 }
 </script>
@@ -1067,7 +1073,7 @@ html:not(.js) .tl-hint{ display:none; }
     <div class="footer-top">
       <div>
         <span class="brand"><b>Esencore</b><i>Peptide Manufacturing</i></span>
-        <address>Simi Valley, California<br>United States</address>
+        <address>2796 Sycamore Drive, Suite 204<br>Simi Valley, CA 93065<br><a href="mailto:support@esencore.io">support@esencore.io</a></address>
       </div>
       <div><h4>Company</h4><div class="footer-links" id="footNav"></div></div>
       <div><h4>Legal</h4><div class="footer-links" id="footLegal"></div></div>
@@ -1153,6 +1159,8 @@ const CONFIG = {
     endpoint: 'https://formspree.io/f/xxxxxxxx',
     facts: [
       { k:'Location', v:'Simi Valley, California' },
+      { k:'Email',    v:'<a href="mailto:support@esencore.io">support@esencore.io</a>' },
+      { k:'Email',    v:'<a href="mailto:support@esencore.io">support@esencore.io</a>' },
       { k:'Programs', v:'Private label &middot; Custom &middot; Recurring' },
       { k:'Serving',  v:'Research-focused organizations' }
     ],

@@ -5,7 +5,7 @@
   "headers": [
     {
       "source": "/img/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=604800" }]
     },
     {
       "source": "/(favicon.svg|favicon-32.png|favicon-16.png|apple-touch-icon.png|og.png)",
