@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Trust Problem | Esencore</title>
+<meta name="description" content="Why a purity claim is not evidence, what a certificate of analysis actually covers, and what Esencore tests before and after production.">
+<meta name="theme-color" content="#080B0E">
+<link rel="canonical" href="https://esencore.io/trust">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Trust Problem | Esencore">
+<meta property="og:description" content="Why a purity claim is not evidence, what a certificate of analysis actually covers, and what Esencore tests before and after production.">
+<meta property="og:url" content="https://esencore.io/trust">
+<meta property="og:image" content="https://esencore.io/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/core.css">
+<style>
+/* =================================================================
+   THE TRUST PROBLEM
+   An argument page. No photography competes with it — the reading
+   column carries the whole thing, and the only ornament is the
+   hairline that separates one move in the argument from the next.
+   ================================================================= */
+
+/* ---------- Opening ---------- */
+.t-hero{
+  padding-block: calc(var(--nav-h) + clamp(5rem,11vw,10rem)) clamp(4rem,8vw,7rem);
+  background:radial-gradient(120% 82% at 50% 0%,
+    #12171C 0%, #0E1318 42%, #0A0E12 76%, #080B0E 100%);
+  border-bottom:1px solid var(--line);
+}
+.t-hero h1{
+  font-size:clamp(2.5rem,7vw,6.5rem); line-height:.92; letter-spacing:-.044em;
+  text-transform:uppercase; font-weight:500; margin-top:1.9rem;
+}
+.t-hero h1 span{ display:block; }
+.t-hero h1 .mute{ color:var(--mute-head); }
+.t-lede{
+  margin-top:clamp(1.75rem,3vw,2.5rem); max-width:50ch;
+  font-size:clamp(1.125rem,1.5vw,1.375rem); line-height:1.65; color:var(--dim);
+}
+.t-meta{
+  margin-top:clamp(2.5rem,5vw,4rem); padding-top:1.5rem; border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:.85rem 2.5rem;
+  font-family:var(--mono); font-size:var(--fs-micro);
+  letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+}
+
+/* ---------- The argument ---------- */
+.arg{ padding-block:clamp(4.5rem,9vw,8.5rem); border-bottom:1px solid var(--line); }
+.arg:last-of-type{ border-bottom:0; }
+.arg-grid{ display:grid; gap:clamp(1.75rem,3.4vw,3rem); }
+@media (min-width:980px){
+  .arg-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:clamp(2.5rem,4.6vw,4.5rem); }
+}
+.arg h2{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.75rem,3.2vw,2.75rem); line-height:1.02;
+  letter-spacing:-.03em; text-transform:uppercase;
+}
+.arg h2 .mute{ display:block; color:var(--mute-head); }
+.arg-n{
+  font-family:var(--mono); font-size:var(--fs-micro); letter-spacing:.2em;
+  color:var(--accent-txt); display:block; margin-bottom:1.35rem;
+}
+.arg-body > p{ color:var(--dim); line-height:1.8; max-width:60ch; }
+.arg-body > p + p{ margin-top:1.4rem; }
+.arg-body strong{ color:var(--chrome); font-weight:500; }
+
+/* A pulled line — the sentence the section exists to deliver. */
+.pull{
+  margin-top:clamp(2rem,3.4vw,2.75rem); padding-left:clamp(1.25rem,2vw,1.75rem);
+  border-left:1px solid var(--accent-dim);
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.25rem,1.9vw,1.625rem); line-height:1.35;
+  letter-spacing:-.018em; color:var(--chrome); max-width:34ch;
+}
+
+/* ---------- The arithmetic ---------- */
+.figs{
+  display:grid; grid-template-columns:minmax(0,1fr); gap:0;
+  margin-top:clamp(2.25rem,4vw,3rem); border-top:1px solid var(--line);
+}
+@media (min-width:640px){ .figs{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+.figs li{ padding:clamp(1.5rem,2.6vw,2rem) 0; border-bottom:1px solid var(--line); }
+@media (min-width:640px){
+  .figs li{ border-bottom:0; border-left:1px solid var(--line);
+    padding-inline:clamp(1.1rem,2vw,1.75rem); }
+  .figs li:first-child{ border-left:0; padding-left:0; }
+}
+.figs b{
+  display:block; font-family:var(--display); font-weight:500;
+  font-size:clamp(2rem,3.5vw,2.875rem); line-height:1;
+  letter-spacing:-.035em; color:var(--chrome);
+}
+.figs span{
+  display:block; margin-top:1rem; font-size:.875rem; line-height:1.6; color:var(--dim);
+  max-width:26ch;
+}
+.figs-note{
+  margin-top:1.15rem;
+  font-family:var(--mono); font-size:var(--fs-micro); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); line-height:2;
+}
+
+/* ---------- What a test answers ---------- */
+.qs{ margin-top:clamp(2.25rem,4vw,3rem); border-top:1px solid var(--line); }
+.qs li{
+  display:grid; grid-template-columns:minmax(0,1fr); gap:.6rem;
+  padding-block:clamp(1.35rem,2.2vw,1.85rem); border-bottom:1px solid var(--line);
+}
+@media (min-width:720px){
+  .qs li{ grid-template-columns:minmax(0,.44fr) minmax(0,1fr); gap:2.5rem; align-items:baseline; }
+}
+.qs h3{
+  font-size:1.0625rem; letter-spacing:.075em; text-transform:uppercase;
+  font-weight:500; line-height:1.3;
+}
+.qs p{ color:var(--dim); font-size:.9375rem; line-height:1.7; }
+
+/* ---------- What we do ---------- */
+.steps{ margin-top:clamp(2.25rem,4vw,3rem); position:relative; padding-left:2.6rem; }
+.steps-rail{ position:absolute; left:5px; top:.9rem; bottom:.9rem; width:1px; background:var(--line); }
+.steps li{ position:relative; padding-block:.9rem; }
+.steps li::before{
+  content:""; position:absolute; left:-2.6rem; top:1.45rem; margin-left:1.5px;
+  width:7px; height:7px; background:var(--accent); border:1px solid var(--accent);
+  transform:rotate(45deg);
+}
+.steps b{
+  display:block; font-family:var(--display); font-weight:500; font-size:1rem;
+  letter-spacing:.075em; text-transform:uppercase; color:var(--chrome); line-height:1.3;
+}
+.steps p{ margin-top:.65rem; color:var(--dim); font-size:.9375rem; line-height:1.7; max-width:56ch; }
+
+/* ---------- Disclosure / limits ---------- */
+.note-panel{
+  margin-top:clamp(2.25rem,4vw,3rem);
+  border:1px solid var(--line-2); padding:clamp(1.6rem,3vw,2.5rem);
+  background:rgba(238,243,246,.022);
+}
+.note-panel h3{
+  font-family:var(--mono); font-size:var(--fs-micro); font-weight:500;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--dim);
+}
+.note-panel p{ margin-top:1.15rem; color:var(--dim); font-size:.9375rem; line-height:1.75; max-width:62ch; }
+.note-panel p + p{ margin-top:1rem; }
+.note-panel strong{ color:var(--chrome); font-weight:500; }
+
+.limits{ margin-top:clamp(2.25rem,4vw,3rem); border-top:1px solid var(--line); }
+.limits li{
+  padding-block:clamp(1.2rem,2vw,1.6rem); border-bottom:1px solid var(--line);
+  color:var(--dim); font-size:.9375rem; line-height:1.75; max-width:70ch;
+  display:flex; gap:1.25rem;
+}
+.limits i{
+  font-style:normal; font-family:var(--mono); font-size:var(--fs-micro);
+  letter-spacing:.14em; color:var(--accent-txt); flex:none; padding-top:.35rem;
+}
+
+/* ---------- Close ---------- */
+.t-end{
+  padding-block:clamp(5rem,10vw,9rem); text-align:center;
+  background:radial-gradient(90% 70% at 50% 100%,
+    #10151A 0%, #0C1014 46%, #080B0E 100%);
+  border-top:1px solid var(--line);
+}
+.t-end h2{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.75rem,3.6vw,3rem); line-height:1.0;
+  letter-spacing:-.03em; text-transform:uppercase;
+}
+.t-end p{ margin:1.6rem auto 0; max-width:44ch; color:var(--dim); line-height:1.75; }
+.t-end .btn{ margin-top:clamp(2rem,3.4vw,2.75rem); }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ================================================================ NAV ================================================================ -->
+<header class="nav is-scrolled" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="Esencore — Peptide Manufacturing, home">
+      <b>Esencore</b><i>Peptide Manufacturing</i>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a class="nav-link" href="/#capabilities">Capabilities</a>
+      <a class="nav-link" href="/#technology">Technology</a>
+      <a class="nav-link" href="/#quality">Quality</a>
+      <a class="nav-link" href="/#private-label">Private Label</a>
+      <a class="nav-link" href="/#facility">Facility</a>
+      <a class="nav-link on" href="/trust">The Trust Problem</a>
+      <a class="nav-link" href="/#contact">Contact</a>
+    </nav>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav aria-label="Mobile">
+    <a class="ml" href="/#capabilities">Capabilities</a>
+    <a class="ml" href="/#technology">Technology</a>
+    <a class="ml" href="/#quality">Quality</a>
+    <a class="ml" href="/#private-label">Private Label</a>
+    <a class="ml" href="/#facility">Facility</a>
+    <a class="ml" href="/trust">The Trust Problem</a>
+    <a class="ml" href="/#contact">Contact</a>
+  </nav>
+  <a class="btn btn-fill" href="/#contact">Partner With Esencore <span class="arw">&#8594;</span></a>
+  <p>Esencore &middot; Simi Valley, California</p>
+</div>
+
+<main id="top">
+
+<!-- ================================================================ OPENING ================================================================ -->
+<section class="t-hero">
+  <div class="wrap">
+    <p class="eyebrow" data-in>Why We Do What We Do</p>
+    <h1 data-in style="--d:80ms"><span>The Trust</span><span class="mute">Problem.</span></h1>
+    <p class="t-lede" data-in style="--d:200ms">
+      Almost everything sold as a research peptide arrives with a number attached to it.
+      Very little of it arrives with evidence. This page is about the difference, and
+      about what we decided to do about it.
+    </p>
+    <div class="t-meta" data-in style="--d:320ms">
+      <span>Esencore &nbsp;/&nbsp; Position Paper</span>
+      <span>Research Use Only</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 01 — THE CLAIM ================================================================ -->
+<section class="arg">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">01 &nbsp;/&nbsp; The Claim</span>
+        <h2>A Number Is<span class="mute">Not A Result.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          <strong>99% purity.</strong> <strong>Tested 30 times.</strong> These read like
+          findings. They are not. A purity figure means something only when you can say
+          what was measured, by which method, on which batch, on what date, and by whom.
+          Detached from those five things it is a sentence on a webpage.
+        </p>
+        <p>
+          &ldquo;Tested 30 times&rdquo; is the clearest example, because it does not describe
+          a test at all. It describes a count that nobody defines &mdash; thirty of what,
+          against what specification, on how many batches. The phrase exists to sound like
+          diligence rather than to report it.
+        </p>
+        <p>
+          Then the material moves. A TikTok recommendation, a Facebook group, a WhatsApp
+          channel, someone reliable two towns over. Each hand-off copies the claim forward
+          intact, because <strong>a claim is far easier to copy than a test is to run.</strong>
+          By the time it reaches a buyer, the number has travelled much further than any
+          evidence behind it ever did.
+        </p>
+        <p class="pull">
+          The number arrives. The instrument run that produced it usually does not.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 02 — THE CERTIFICATE ================================================================ -->
+<section class="arg">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">02 &nbsp;/&nbsp; The Certificate</span>
+        <h2>A COA Describes<span class="mute">One Vial.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          A certificate of analysis is a record of what an instrument saw in the specific
+          sample placed in front of it. That is exactly what makes it valuable, and exactly
+          what limits it. It is evidence about one vial, from one batch, on one day.
+          <strong>It is not a property of the shipment it gets stapled to.</strong>
+        </p>
+        <p>
+          Watch what that means in practice. A hundred boxes arrive under a single claim and
+          a single certificate. You pull a vial from box one and send it out. It comes back
+          clean. Nothing about that result reaches box eight.
+        </p>
+        <p>
+          So when box eight comes back at half the stated purity, the first result does not
+          become wrong &mdash; it simply stops being relevant. You are now holding ninety-eight
+          boxes in an unknown state, and one certificate that never described them. The
+          material has not changed. Your knowledge of it has collapsed.
+        </p>
+        <p class="pull">
+          One good result does not travel across a shipment. One bad result travels across all of it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 03 — THE ARITHMETIC ================================================================ -->
+<section class="arg">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">03 &nbsp;/&nbsp; The Arithmetic</span>
+        <h2>Checking It Costs<span class="mute">More Than Buying It.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          The obvious answer is to test it yourself. The reason almost nobody does is not
+          negligence. It is the bill.
+        </p>
+
+        <ul class="figs">
+          <li>
+            <b>100</b>
+            <span>Boxes in an order of the size a small brand actually places.</span>
+          </li>
+          <li>
+            <b>$150+</b>
+            <span>Typical minimum to run a single vial at an outside laboratory.</span>
+          </li>
+          <li>
+            <b>$15,000</b>
+            <span>To put one vial from every box through that laboratory.</span>
+          </li>
+        </ul>
+
+        <p class="figs-note">One vial per box &mdash; and that is the cheap version</p>
+
+        <p>
+          It still tells you nothing about the other vials inside the box it came from. Real
+          confidence means testing every vial, which costs more than the inventory is worth
+          and destroys the inventory to find out. So the testing does not happen, the claim
+          goes unchecked, and the entire market runs on a single assumption:
+          <strong>that somebody upstream already did the work.</strong>
+        </p>
+        <p>
+          That assumption is the product most of this industry is actually selling.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 04 — WHAT A TEST ANSWERS ================================================================ -->
+<section class="arg">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">04 &nbsp;/&nbsp; The Questions</span>
+        <h2>What Testing<span class="mute">Actually Answers.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          &ldquo;Tested&rdquo; is not one thing. A buyer sending material to a laboratory is
+          asking specific, separate questions, and a certificate answers only the ones that
+          were actually run.
+        </p>
+
+        <ul class="qs">
+          <li>
+            <h3>Identity</h3>
+            <p>Is the compound in this vial the compound named on the label &mdash; and is it the only one present?</p>
+          </li>
+          <li>
+            <h3>Purity</h3>
+            <p>What proportion of the material is the named compound, and what makes up the remainder?</p>
+          </li>
+          <li>
+            <h3>Content</h3>
+            <p>How much compound is physically in the vial, measured against what the label states?</p>
+          </li>
+          <li>
+            <h3>Endotoxin</h3>
+            <p>What bacterial endotoxin load does the material carry, expressed against a defined limit?</p>
+          </li>
+        </ul>
+
+        <p style="margin-top:clamp(1.75rem,3vw,2.25rem)">
+          A vial that fails on identity is a different problem from one that passes identity
+          and fails on content. A certificate that reports a purity figure and nothing else
+          has answered one question out of four &mdash; and it is not the question that catches
+          material which was never the right compound to begin with.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 05 — WHAT WE DO ================================================================ -->
+<section class="arg on-dark">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">05 &nbsp;/&nbsp; Our Answer</span>
+        <h2>Test The Material,<span class="mute">Not The Paperwork.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          We did not solve this by writing a better claim. We moved the testing to the two
+          points where it changes a decision &mdash; before material is committed to a
+          formulation, and after the batch exists.
+        </p>
+
+        <ul class="steps">
+          <span class="steps-rail" aria-hidden="true"></span>
+          <li>
+            <b>Incoming material is tested before production</b>
+            <p>
+              Active material is tested when it arrives and held until that result exists.
+              Every lot, not a sample of lots &mdash; because a lot that was never checked is
+              exactly the box-eight problem, moved inside our own building.
+            </p>
+          </li>
+          <li>
+            <b>The finished batch is tested after production</b>
+            <p>
+              A vial is drawn from the batch itself and tested after the batch is made. The
+              question it answers is not what the raw material was, but what came out the
+              other end of our process.
+            </p>
+          </li>
+          <li>
+            <b>Both results attach to the batch record</b>
+            <p>
+              Release is made against the batch&rsquo;s own documentation, and that
+              documentation stays associated with it. A result that is not bound to a
+              specific batch is the same detached number we started this page complaining about.
+            </p>
+          </li>
+        </ul>
+
+        <div class="note-panel">
+          <h3>Disclosure &mdash; who runs the analysis</h3>
+          <p>
+            Testing is performed by <strong>Sycamore Analytical</strong>, which is affiliated
+            with Esencore. <strong>This is not independent third-party testing, and we will not
+            describe it as though it were.</strong> You should weight it accordingly.
+          </p>
+          <p>
+            What the arrangement does buy is the thing the arithmetic above makes impossible
+            for most buyers: testing stops being a per-sample invoice we are tempted to
+            economise on, so it can run on every incoming lot rather than on a representative
+            few. That is a real difference in coverage, and it is a different claim from
+            independence.
+          </p>
+          <p>
+            If you want confirmation from a laboratory that has no relationship with us, we
+            would rather you get it. Ask us for material to send out.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 06 — LIMITS ================================================================ -->
+<section class="arg">
+  <div class="wrap">
+    <div class="arg-grid">
+      <div data-in>
+        <span class="arg-n">06 &nbsp;/&nbsp; The Limits</span>
+        <h2>What This<span class="mute">Does Not Prove.</span></h2>
+      </div>
+      <div class="arg-body" data-in style="--d:120ms">
+        <p>
+          A page arguing that other people overstate their evidence has an obligation to be
+          precise about its own. So, plainly:
+        </p>
+
+        <ul class="limits">
+          <li><i>01</i><span>Testing every incoming lot reduces the chance that unidentified material reaches production. It does not make it impossible, and we do not claim that it does.</span></li>
+          <li><i>02</i><span>Every result describes the sample it was run on. That limit is not something we escape by being the ones running it &mdash; it applies to our certificates exactly as it applies to everyone else&rsquo;s.</span></li>
+          <li><i>03</i><span>Coverage is not independence. We test more material than a sampling approach would; an unaffiliated laboratory would carry more weight on any single result.</span></li>
+          <li><i>04</i><span>Nothing on this page is a regulatory status. Esencore does not hold and does not claim FDA approval, GMP or cGMP certification, ISO certification or USP compliance, and nothing here should be read as a representation of sterility or of suitability for human use.</span></li>
+          <li><i>05</i><span>All Esencore products are supplied for laboratory research use only. They are not for human use or consumption.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ CLOSE ================================================================ -->
+<section class="t-end">
+  <div class="wrap" data-in>
+    <h2>Ask Us What We Test.</h2>
+    <p>
+      Bring us the questions you would ask a laboratory, and we will tell you which ones our
+      process answers and which ones it does not.
+    </p>
+    <a class="btn btn-line" href="/#contact">Partner With Esencore <span class="arw">&#8594;</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- ================================================================ FOOTER ================================================================ -->
+<footer class="footer on-dark">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <span class="brand"><b>Esencore</b><i>Peptide Manufacturing</i></span>
+        <address>2796 Sycamore Drive, Suite 204<br>Simi Valley, CA 93065<br><a href="mailto:support@esencore.io">support@esencore.io</a></address>
+      </div>
+      <div><h4>Company</h4><div class="footer-links">
+        <a href="/#capabilities">Capabilities</a>
+        <a href="/#technology">Technology</a>
+        <a href="/#quality">Quality</a>
+        <a href="/#private-label">Private Label</a>
+        <a href="/#facility">Facility</a>
+        <a href="/trust">The Trust Problem</a>
+        <a href="/#contact">Contact</a>
+      </div></div>
+      <div><h4>Legal</h4><div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/research-use-policy">Research Use Policy</a>
+      </div></div>
+    </div>
+    <div class="footer-bot">
+      <p>Research Use Only &mdash; Not For Human Use Or Consumption.</p>
+      <p id="footCopy"></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- copyright --- */
+  var c = document.getElementById('footCopy');
+  if (c) c.textContent = '© ' + new Date().getFullYear() + ' Esencore. All rights reserved.';
+
+  /* --- mobile menu --- */
+  var burger = document.getElementById('burger'), menu = document.getElementById('menu');
+  function setMenu(open){
+    if (!burger || !menu) return;
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('locked', open);
+  }
+  if (burger) burger.addEventListener('click', function(){
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  if (menu) menu.addEventListener('click', function(e){
+    if (e.target.closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setMenu(false); });
+
+  /* --- nav ground: this page opens under the bar, so it starts solid --- */
+  var nav = document.getElementById('nav');
+  if (nav) nav.classList.add('is-scrolled');
+
+  /* --- reveals, with the same failsafe the homepage uses: nothing on this
+         page may stay invisible because an observer never fired --- */
+  var items = Array.prototype.slice.call(document.querySelectorAll('[data-in]'));
+  function showAll(){ items.forEach(function(el){ el.classList.add('in'); }); }
+  if (reduce || !('IntersectionObserver' in window)) {
+    showAll();
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    items.forEach(function(el){ io.observe(el); });
+    setTimeout(showAll, 2400);
+  }
+})();
+</script>
+
+</body>
+</html>
