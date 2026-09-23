@@ -82,6 +82,43 @@
   letter-spacing:-.018em; color:var(--chrome); max-width:34ch;
 }
 
+/* ---------- The ratchet ----------
+   Not a chart: there is no dataset here, only a claim escalating. A row of
+   figures on a rail says "this went up" without pretending it was measured. */
+.ratchet{
+  /* start, not flex-end: the last step carries a caption, and bottom-aligning
+     would drop its rail below the other three and break the line. */
+  display:flex; align-items:start; gap:0;
+  margin-top:clamp(2rem,3.4vw,2.75rem); list-style:none; padding:0;
+}
+.ratchet li{
+  position:relative; flex:1 1 0; min-width:0;
+  padding-top:1.6rem; border-top:1px solid var(--line);
+}
+.ratchet li::before{
+  content:""; position:absolute; top:-3px; left:0; width:5px; height:5px;
+  border-radius:50%; background:var(--ink); border:1px solid var(--line-2);
+}
+.ratchet b{
+  display:block; font-family:var(--display); font-weight:500;
+  font-size:clamp(1.5rem,3vw,2.5rem); line-height:1;
+  letter-spacing:-.035em; color:var(--faint);
+}
+/* The endpoint is the whole point, so it is the only lit mark on the rail. */
+.ratchet .now{ border-top-color:var(--accent-dim); }
+.ratchet .now::before{ background:var(--accent); border-color:var(--accent); }
+.ratchet .now b{ color:var(--chrome); }
+.ratchet i{
+  display:block; margin-top:.6rem; font-style:normal;
+  font-family:var(--mono); font-size:var(--fs-micro); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--accent-txt);
+}
+.ratchet-note{
+  margin-top:1.15rem;
+  font-family:var(--mono); font-size:var(--fs-micro); letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); line-height:2;
+}
+
 /* ---------- The arithmetic ---------- */
 .figs{
   display:grid; grid-template-columns:minmax(0,1fr); gap:0;
@@ -247,16 +284,31 @@
       </div>
       <div class="arg-body" data-in style="--d:120ms">
         <p>
-          <strong>99% purity.</strong> <strong>Tested 30 times.</strong> These read like
-          findings. They are not. A purity figure means something only when you can say
-          what was measured, by which method, on which batch, on what date, and by whom.
-          Detached from those five things it is a sentence on a webpage.
+          <strong>99% purity.</strong> <strong>7x tested.</strong> These read like findings.
+          They are not. A purity figure means something only when you can say what was
+          measured, by which method, on which batch, on what date, and by whom. Detached
+          from those five things it is a sentence on a webpage.
         </p>
         <p>
-          &ldquo;Tested 30 times&rdquo; is the clearest example, because it does not describe
-          a test at all. It describes a count that nobody defines &mdash; thirty of what,
-          against what specification, on how many batches. The phrase exists to sound like
-          diligence rather than to report it.
+          The multiplier is the clearest example, because it does not describe a test at all.
+          It describes a count nobody defines &mdash; seven of <em>what</em>, against which
+          specification, on how many batches, by how many laboratories. And then watch which
+          direction it moves.
+        </p>
+
+        <ol class="ratchet" aria-label="How the multiplier has escalated">
+          <li><b>3x</b></li>
+          <li><b>4x</b></li>
+          <li><b>7x</b></li>
+          <li class="now"><b>15x</b><i>Now</i></li>
+        </ol>
+        <p class="ratchet-note">Four escalations, no new chemistry</p>
+
+        <p>
+          Nothing about analytical instrumentation got four times better while that was
+          happening. The number climbed because it is not reporting anything &mdash; it is
+          competing. Each seller needs a figure that beats the last one a buyer saw, and the
+          only cost of raising it is typing a different digit.
         </p>
         <p>
           Then the material moves. A TikTok recommendation, a Facebook group, a WhatsApp
