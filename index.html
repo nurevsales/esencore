@@ -463,67 +463,11 @@ html:not(.js) .tl-hint{ display:none; }
   }
 }
 
-/* =================================================================
-   INQUIRY FORM
-   ================================================================= */
-.contact{ background:var(--ink-2); border-top:1px solid var(--line); padding-block:var(--pad); }
-.contact-grid{ display:grid; gap:clamp(3rem,6vw,6rem); align-items:start; }
-@media (min-width:960px){ .contact-grid{ grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr); } }
-.contact-aside .title{ margin-top:1.9rem; font-size:clamp(2rem,3.4vw,3rem); }
-.contact-aside .copy{ margin-top:1.7rem; }
-.contact-aside dl{ margin-top:clamp(2.25rem,4vw,3.25rem); border-top:1px solid var(--line); }
-.contact-aside .row{ display:flex; justify-content:space-between; gap:1.5rem;
-  padding-block:1.15rem; border-bottom:1px solid var(--line); }
-.contact-aside dt{ font-family:var(--mono); font-size:var(--fs-micro);
-  letter-spacing:.18em; text-transform:uppercase; color:var(--dim); }
-.contact-aside dd{ margin:0; font-size:.875rem; text-align:right; color:var(--dim); }
-
-.form{ display:grid; grid-template-columns:minmax(0,1fr); gap:2rem; }
-@media (min-width:640px){ .form{ grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:clamp(1.5rem,3vw,2.75rem); } }
-.field{ display:flex; flex-direction:column; gap:.65rem; min-width:0; }
-.field.full{ grid-column:1/-1; }
-.field label{ font-family:var(--mono); font-size:var(--fs-micro); font-weight:500;
-  letter-spacing:.18em; text-transform:uppercase; color:var(--dim); }
-.field label .rq{ color:var(--accent-dim); }
-.field input,.field select,.field textarea{
-  width:100%; background:transparent; color:var(--chrome);
-  border:0; border-bottom:1px solid var(--line-2); border-radius:0;
-  padding:.75rem 0; font-size:.9375rem;
-  transition:border-color .4s var(--ease);
-}
-.field textarea{ resize:vertical; min-height:112px; line-height:1.65; }
-.field select{
-  appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:1.75rem;
-  background-image:linear-gradient(45deg,transparent 50%,#7E888F 50%),linear-gradient(135deg,#7E888F 50%,transparent 50%);
-  background-position:calc(100% - 10px) 1.2em, calc(100% - 5px) 1.2em;
-  background-size:5px 5px,5px 5px; background-repeat:no-repeat;
-}
-.field select option{ background:var(--ink-3); color:var(--chrome); }
-.field input::placeholder,.field textarea::placeholder{ color:var(--faint); opacity:.75; }
-.field input:focus,.field select:focus,.field textarea:focus{ outline:none; border-bottom-color:var(--accent); }
-.field.err input,.field.err select,.field.err textarea{ border-bottom-color:#C97260; }
-.field .msg{ font-size:.75rem; color:#C97260; display:none; }
-.field.err .msg{ display:block; }
-/* honeypot — off-screen, never focusable, bots fill it and people don't */
-.hp{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
-.form-err{
-  grid-column:1/-1; margin-top:.25rem;
-  font-size:.8125rem; line-height:1.6; color:#E0A288;
-  border-left:2px solid #C2603C; padding:.7rem 0 .7rem 1.1rem;
-}
-.form-err a{ color:#F2C8B4; border-bottom:1px solid rgba(242,200,180,.45); }
-.form-foot{ grid-column:1/-1; display:flex; flex-direction:column; gap:1.25rem; margin-top:.5rem; }
-@media (min-width:640px){ .form-foot{ flex-direction:row; align-items:center; justify-content:space-between; } }
-.form-note{ font-size:.75rem; color:var(--faint); max-width:42ch; line-height:1.65; }
-.done{ border:1px solid var(--line-2); padding:clamp(2rem,4vw,3rem); }
-.done h3{ font-size:1.5rem; text-transform:uppercase; letter-spacing:-.01em; margin-top:1.25rem; }
-.done p{ color:var(--dim); margin-top:1rem; font-size:.9375rem; }
-
-.footer address a, .contact-aside dd a{
+.footer address a{
   color:var(--dim); border-bottom:1px solid var(--line);
   transition:color .3s var(--ease), border-color .3s var(--ease);
 }
-.footer address a:hover, .contact-aside dd a:hover{ color:var(--chrome); border-bottom-color:var(--line-2); }
+.footer address a:hover{ color:var(--chrome); border-bottom-color:var(--line-2); }
 
 </style>
 
@@ -558,7 +502,6 @@ html:not(.js) .tl-hint{ display:none; }
 
 <div class="menu" id="menu" aria-hidden="true">
   <nav id="menuLinks" aria-label="Mobile"></nav>
-  <a class="btn btn-fill" href="#contact">Partner With Esencore <span class="arw">&#8594;</span></a>
   <p>Esencore &middot; Simi Valley, California</p>
 </div>
 
@@ -581,8 +524,7 @@ html:not(.js) .tl-hint{ display:none; }
       <h1 data-h style="--d:80ms"><span>The Next Standard</span><span>In Peptide</span><span>Manufacturing.</span></h1>
       <p class="hero-sub" data-h style="--d:240ms">Precision manufacturing. Controlled processes. Analytical verification. Batch-level traceability.</p>
       <div class="hero-act" data-h style="--d:360ms">
-        <a class="btn btn-fill" href="#contact">Partner With Esencore <span class="arw">&#8594;</span></a>
-        <a class="btn btn-line" href="#capabilities">Explore Our Capabilities</a>
+              <a class="btn btn-line" href="#capabilities">Explore Our Capabilities</a>
       </div>
     </div>
     <div class="hero-foot" data-h style="--d:520ms">
@@ -792,75 +734,7 @@ html:not(.js) .tl-hint{ display:none; }
     <p class="final-tag">Science <i>|</i> Quality <i>|</i> Higher Standards</p>
     <h2 class="title"><span>Precision.</span><span>Purity.</span><span class="mute">Performance.</span></h2>
     <p class="copy">Build your next manufacturing program with Esencore.</p>
-    <a class="btn btn-fill" href="#contact">Partner With Esencore <span class="arw">&#8594;</span></a>
-  </div>
-</section>
-
-<!-- ================================================================ INQUIRY ================================================================ -->
-<section class="contact bg-ice" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-aside" data-in>
-        <p class="eyebrow">Manufacturing Inquiry</p>
-        <h2 class="title"><span>Start The</span><span class="mute">Conversation.</span></h2>
-        <p class="copy">Tell us what you need produced, the documentation your program requires, and the scale you are working toward. A member of the Esencore team will follow up directly.</p>
-        <dl id="facts"></dl>
-      </div>
-      <div data-in style="--d:140ms">
-        <form class="form" id="inquiry" novalidate>
-          <div class="field">
-            <label for="f-name">Name <span class="rq">*</span></label>
-            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Full name" required>
-            <span class="msg">Please enter your name.</span>
-          </div>
-          <div class="field">
-            <label for="f-company">Company <span class="rq">*</span></label>
-            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder="Organization" required>
-            <span class="msg">Please enter your company.</span>
-          </div>
-          <div class="field">
-            <label for="f-email">Business Email <span class="rq">*</span></label>
-            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="name@company.com" required>
-            <span class="msg">Please enter a valid business email.</span>
-          </div>
-          <div class="field">
-            <label for="f-phone">Phone</label>
-            <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional">
-            <span class="msg"></span>
-          </div>
-          <div class="field">
-            <label for="f-interest">What Are You Looking For? <span class="rq">*</span></label>
-            <select id="f-interest" name="interest" required></select>
-            <span class="msg">Please choose an option.</span>
-          </div>
-          <div class="field">
-            <label for="f-volume">Estimated Production Requirement</label>
-            <select id="f-volume" name="volume"></select>
-            <span class="msg"></span>
-          </div>
-          <div class="field full">
-            <label for="f-details">Project Details</label>
-            <textarea id="f-details" name="details" rows="4" placeholder="Specifications, concentrations, batch sizes, packaging configurations, documentation requirements."></textarea>
-            <span class="msg"></span>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="f-website">Website</label>
-            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <p class="form-err" id="formErr" hidden tabindex="-1">We couldn&rsquo;t send that just now. Please email <a href="mailto:support@esencore.io">support@esencore.io</a> directly, and we&rsquo;ll pick it up from there.</p>
-          <div class="form-foot">
-            <p class="form-note">Research use only. Please do not include medical, patient or personal health information in this form.</p>
-            <button class="btn btn-fill" type="submit" id="submitBtn">Start The Conversation <span class="arw">&#8594;</span></button>
-          </div>
-        </form>
-        <div class="done" id="done" hidden tabindex="-1">
-          <p class="eyebrow">Inquiry Received</p>
-          <h3>Thank You.</h3>
-          <p>Your inquiry has been logged. A member of the Esencore manufacturing team will review the details and follow up at the address you provided.</p>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 
 </main>
@@ -895,8 +769,7 @@ const CONFIG = {
     { label:'Technology',    href:'#technology' },
     { label:'Quality',       href:'#quality' },
     { label:'Private Label', href:'#private-label' },
-    { label:'Facility',      href:'#facility' },
-    { label:'Contact',       href:'#contact' }
+    { label:'Facility',      href:'#facility' }
   ],
 
   /* Each stage carries the detail shown when it is selected in the explorer.
@@ -944,21 +817,6 @@ const CONFIG = {
     { t:'Analytical Services',         d:'Chromatographic analysis and documented analytical workflows where validated methods exist.' }
   ],
 
-  contact: {
-    /* Posts to our own serverless function (api/contact.js), which sends
-       the inquiry on to support@esencore.io. That function needs one env
-       var set in Vercel — see the note at the top of api/contact.js. */
-    endpoint: '/api/contact',
-    facts: [
-      { k:'Location', v:'Simi Valley, California' },
-      { k:'Email',    v:'<a href="mailto:support@esencore.io">support@esencore.io</a>' },
-      { k:'Programs', v:'Private label &middot; Custom &middot; Recurring' },
-      { k:'Serving',  v:'Research-focused organizations' }
-    ],
-    interest: ['Private Label Manufacturing','Custom Production','Recurring Production','Analytical Services','Other'],
-    volume:   ['Under 100 vials','100–500','500–1,000','1,000–5,000','5,000+','Not Sure Yet']
-  },
-
   footer: {
     nav: [
       { label:'Capabilities',       href:'#capabilities' },
@@ -966,8 +824,7 @@ const CONFIG = {
       { label:'Quality',            href:'#quality' },
       { label:'Private Label',      href:'#private-label' },
       { label:'Facility',           href:'#facility' },
-      { label:'The Trust Problem',  href:'/trust' },
-      { label:'Contact',            href:'#contact' }
+      { label:'The Trust Problem',  href:'/trust' }
     ],
     legal: [
       { label:'Privacy', href:'/privacy' },
@@ -1002,15 +859,6 @@ const CONFIG = {
   set('svc', CONFIG.services.map((s, i) =>
     '<li><span class="n">' + pad(i) + '</span><h3>' + s.t + '</h3><p>' + s.d + '</p></li>'
   ).join(''));
-
-  set('facts', CONFIG.contact.facts.map(f =>
-    '<div class="row"><dt>' + f.k + '</dt><dd>' + f.v + '</dd></div>'
-  ).join(''));
-
-  const opts = list => '<option value="" disabled selected>Select&hellip;</option>' +
-    list.map(v => '<option value="' + v + '">' + v + '</option>').join('');
-  if ($('f-interest')) $('f-interest').innerHTML = opts(CONFIG.contact.interest);
-  if ($('f-volume'))   $('f-volume').innerHTML   = opts(CONFIG.contact.volume);
 
   set('footNav',   CONFIG.footer.nav.map(i => '<a href="' + i.href + '">' + i.label + '</a>').join(''));
   set('footLegal', CONFIG.footer.legal.map(i => '<a href="' + i.href + '">' + i.label + '</a>').join(''));
@@ -1260,55 +1108,6 @@ const CONFIG = {
   if (menu) menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
-  /* --- inquiry form --- */
-  const form = document.getElementById('inquiry');
-  const done = document.getElementById('done');
-  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      let bad = null;
-      form.querySelectorAll('.field').forEach(f => {
-        const c = f.querySelector('input, select, textarea');
-        if (!c || !c.hasAttribute('required')) return;
-        const empty = !c.value.trim();
-        const invalid = empty || (c.type === 'email' && !emailOk(c.value.trim()));
-        f.classList.toggle('err', invalid);
-        if (invalid && !bad) bad = c;
-      });
-      if (bad) { bad.focus(); return; }
-
-      const data = {};
-      new FormData(form).forEach((v, k) => { data[k] = v; });
-      const btn = document.getElementById('submitBtn');
-      const errBox = document.getElementById('formErr');
-      const label = btn ? btn.innerHTML : '';
-
-      const finish = () => { form.hidden = true; if (done) { done.hidden = false; done.focus(); } };
-      /* Never thank someone for a message that did not send. */
-      const fail = () => {
-        if (btn) { btn.disabled = false; btn.innerHTML = label; }
-        if (errBox) { errBox.hidden = false; errBox.focus(); }
-      };
-
-      if (!CONFIG.contact.endpoint) { fail(); return; }
-      if (errBox) errBox.hidden = true;
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-
-      fetch(CONFIG.contact.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); finish(); })
-        .catch(fail);
-    });
-    form.addEventListener('input', e => {
-      const f = e.target.closest('.field');
-      if (f) f.classList.remove('err');
-    });
-  }
 })();
 </script>
 

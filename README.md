@@ -4,7 +4,9 @@ Static marketing site for Esencore Peptide Manufacturing. No build step, no
 dependencies, no framework. Vercel serves these files as they are.
 
 ```
-index.html                  the site — all CSS and JS inline, one file
+index.html                  the home page — section CSS and JS inline
+trust.html                  The Trust Problem — the position page
+assets/core.css             shared design system, linked by both of the above
 privacy.html                \
 terms.html                   |  policy pages, share /assets/legal.css
 research-use-policy.html    /
@@ -84,21 +86,15 @@ once the records resolve.
 
 ## 3. Before it goes public
 
-### Blocking — the form loses inquiries until this is done
+### There is no contact form
 
-`index.html`, in the `CONFIG` object near the bottom, `contact.endpoint` is
-`null`. In that state the form validates and thanks the visitor but **sends
-nothing**.
+The site has no inquiry form and no serverless function behind one. The only
+route to Esencore is the `mailto:` on `support@esencore.io` in the footer of
+every page. Nothing needs configuring in Vercel for that to work, and there is
+no endpoint that can silently drop a message.
 
-Create a free form at [formspree.io](https://formspree.io), then:
-
-```js
-endpoint: 'https://formspree.io/f/xxxxxxxx',
-```
-
-Any endpoint accepting a JSON `POST` works — a Vercel serverless function, your
-CRM's inbound webhook, whatever you already use. Submit a real test inquiry and
-confirm it arrives before you announce the site.
+If a form is ever added back, the rule it was built to follow is worth keeping:
+never show a thank-you for a message that did not send.
 
 ### Blocking — fill in the legal placeholders
 
@@ -151,7 +147,7 @@ that also fails it shows a designed tonal field — it never shows a broken imag
 
 Most repeated text lives in one `CONFIG` object near the bottom of
 `index.html`: navigation, the six process stages and their explorer detail, the
-quality chain, the service list, form dropdown options, footer links.
+quality chain, the service list, footer links.
 
 Section headlines and body copy sit in the markup itself, one block per
 section, each labelled with a comment.
